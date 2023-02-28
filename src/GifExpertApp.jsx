@@ -1,36 +1,41 @@
 
 import React from 'react';
 import { useState } from 'react';
-import AddCategory from './components/AddCategory';
+import {AddCategory, GifGrid} from './components';
 
 const GifExpertApp = () => {
 
-    const [categories, setCategories] = useState(['Apex', 'segundo']);
+    const [categories, setCategories] = useState(['Apex']);
 
 
-    const onAddCategory = () =>{
-        
-        setCategories(categories.concat('element'));
+    const onAddCategory = (newCategory) => {
 
-       
+        if (categories.includes(newCategory)) return;
+
+        // setCategories(categories.concat(newCategory)); //Forma mia
+
+        setCategories([newCategory, ...categories]);
     }
 
-  return (
-    <>
-    {/* titulo */}
-      <h1>GifExpertApp</h1>
-      {/* Input */}
-      <AddCategory/>
-      {/* Listado de Gif */}
-      <button onClick={onAddCategory}>Agregar</button>
-      <ol>
-        {categories.map((category) => {
-            return <li key={category}>{category}</li>
-        })}
-      </ol>
-        {/* Gif Item */}
-    </>
-  )
+    return (
+        <>
+
+            <h1>GifExpertApp</h1>
+
+            <AddCategory
+                onNewCategory={onAddCategory}
+            />
+
+
+            {categories.map((category) =>(
+                <GifGrid
+                    key={category}
+                    category={category}
+                />
+            ))}
+
+        </>
+    )
 }
 
 export default GifExpertApp
